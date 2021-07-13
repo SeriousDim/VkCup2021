@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">VK_Cup_2021</string>
+    <string name="vk_cup">VK Cup 2021</string>
+
+    <string name="task1">1. Такси</string>
+    <string name="task2">2. Новости с карточками</string>
+    <string name="task3">3. Видеоредактор</string>
+    <string name="task4">4. Крестики-нолики</string>
+    <string name="task5">5. Обработка голоса</string>
+
+    <string name="news">Новости</string>
+    <string name="hide">Скрыть</string>
+    <string name="like">Нравится</string>
+
 </resources>
