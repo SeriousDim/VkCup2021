@@ -17,7 +17,7 @@ class ApiWorker{
     private var api: RecommendApi
     private var context: Context
 
-    private lateinit var recommendation: Recommendation
+    var recommendation: Recommendation? = null
 
     constructor(c: Context){
         retrofit = Retrofit.Builder()
@@ -29,7 +29,7 @@ class ApiWorker{
         context = c
     }
 
-    fun getRecommend(){
+    fun getRecommend(func: () -> Unit){
         var call = api.getRecommendations("5.52", TOKEN, 20)
         call.enqueue(object: Callback<Recommendation>{
             override fun onFailure(call: Call<Recommendation>, t: Throwable) {
@@ -42,6 +42,7 @@ class ApiWorker{
             ) {
                 if (response.isSuccessful){
                     recommendation = response.body()!!
+                    func.invoke()
                 }
             }
         })
