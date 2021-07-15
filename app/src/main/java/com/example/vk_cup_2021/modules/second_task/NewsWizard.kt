@@ -1,16 +1,9 @@
-package com.example.vk_cup_2021.modules
+package com.example.vk_cup_2021.modules.second_task
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
-import android.view.View
-import android.widget.ImageView
 import android.widget.SimpleAdapter
 import com.example.example.*
 import com.example.vk_cup_2021.R
-import com.lorentzos.flingswipe.SwipeFlingAdapterView
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.news_card.view.*
 import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,6 +20,9 @@ class NewsWizard{
     private val ATTR_LIKES = "ATTR_LIKES"
     private val ATTR_COMMENTS = "ATTR_COMMENTS"
     private val ATTR_REPOSTS = "ATTR_REPOSTS"
+    private val ATTR_SCROLLED_LEFT = "ATTR_SCROLLED_LEFT"
+    private val ATTR_SCROLLED_RIGHT = "ATTR_SCROLLED_RIGHT"
+    private val ATTR_POST_ID = "ATTR_POST_ID"
 
     fun getFirstPhoto(item: Items): Photo?{
         if (item.attachments.size == 0)
@@ -68,10 +64,14 @@ class NewsWizard{
             val photo = getFirstPhoto(item)
             map.put(ATTR_PHOTO, photo?.photo807)
 
+            map.put(ATTR_POST_ID, item.postId)
             map.put(ATTR_TEXT, item.text)
             map.put(ATTR_LIKES, item.likes.count)
             map.put(ATTR_COMMENTS, item.comments.count)
             map.put(ATTR_REPOSTS, item.reposts.count)
+
+            //map.put(ATTR_SCROLLED_LEFT, false)
+            //map.put(ATTR_SCROLLED_RIGHT, false)
 
             map.put(ATTR_TIMESTAMP, getDate(item.date))
 
@@ -96,10 +96,10 @@ class NewsWizard{
 
     fun getSimpleAdapter(c: Context, data: ArrayList<Map<String, Any?>>): SimpleAdapter{
         val from = arrayOf(ATTR_LOGO, ATTR_NAME, ATTR_TIMESTAMP, ATTR_PHOTO, ATTR_TEXT,
-            ATTR_LIKES, ATTR_COMMENTS, ATTR_REPOSTS)
+            ATTR_LIKES, ATTR_COMMENTS, ATTR_REPOSTS/*, ATTR_SCROLLED_LEFT, ATTR_SCROLLED_RIGHT*/, ATTR_POST_ID)
 
         val to = intArrayOf(R.id.avatar, R.id.name, R.id.timestamp, R.id.photo, R.id.content_text,
-            R.id.likes, R.id.comments, R.id.reposts)
+            R.id.likes, R.id.comments, R.id.reposts/*, R.id.lessNews, R.id.moreNews*/)
 
         val result = SimpleAdapter(c, data, R.layout.news_card, from, to)
         result.setViewBinder(getViewBinder())

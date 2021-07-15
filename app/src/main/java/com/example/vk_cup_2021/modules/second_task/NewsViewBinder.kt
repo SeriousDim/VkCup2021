@@ -1,12 +1,12 @@
-package com.example.vk_cup_2021.modules
+package com.example.vk_cup_2021.modules.second_task
 
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.SimpleAdapter
 import android.widget.TextView
 import com.example.vk_cup_2021.R
-import kotlinx.android.synthetic.main.news_card.view.*
+import com.example.vk_cup_2021.modules.FontWorker
+import com.example.vk_cup_2021.modules.ImageWorker
 
 class NewsViewBinder: SimpleAdapter.ViewBinder{
 

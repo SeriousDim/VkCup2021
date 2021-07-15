@@ -1,14 +1,16 @@
 package com.example.vk_cup_2021.tasks.second
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 import android.widget.SimpleAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.vk_cup_2021.R
 import com.example.vk_cup_2021.modules.FontWorker
-import com.example.vk_cup_2021.modules.NewsWizard
+import com.example.vk_cup_2021.modules.second_task.NewsWizard
+import com.example.vk_cup_2021.modules.Notifier
 import com.example.vk_cup_2021.retrofit.api.ApiWorker
 import com.lorentzos.flingswipe.SwipeFlingAdapterView
 import com.lorentzos.flingswipe.SwipeFlingAdapterView.onFlingListener
@@ -37,23 +39,12 @@ class SecondActivity : AppCompatActivity() {
             simpleAdapter?.notifyDataSetChanged()
         }
 
-        /*var al = ArrayList<String>()
-        al.add("php")
-        al.add("c")
-        al.add("python")
-        al.add("java")
-        al.add("c++")
-        al.add("javascript")
-        al.add("ruby")
-        al.add("assembly")*/
+        var liked = ArrayList<Map<String, Any?>>()
+        var disliked = ArrayList<Map<String, Any?>>()
 
         back.setOnClickListener() {
             finish()
         }
-
-        //var arrayAdapter = ArrayAdapter<String>(this, R.layout.test_news_card, R.id.testView, al)
-
-        //set the listener and the adapter
 
         flingContainer.setFlingListener(object : onFlingListener {
             override fun removeFirstObjectInAdapter() {
@@ -64,19 +55,29 @@ class SecondActivity : AppCompatActivity() {
             }
 
             override fun onLeftCardExit(dataObject: Any) {
-
+                disliked.add(dataObject as Map<String, Any?>)
             }
 
             override fun onRightCardExit(dataObject: Any) {
-
+                liked.add(dataObject as Map<String, Any?>)
             }
 
             override fun onAdapterAboutToEmpty(itemsInAdapter: Int) {
-                Log.d("SECOND", "adapter count = ${simpleAdapter?.count}")
+                if (itemsInAdapter == 0){
+                    Notifier.showToast(this@SecondActivity, "Liked: ${liked.size}\nDisliked: ${disliked.size}")
+                }
             }
 
-            override fun onScroll(p0: Float) {
+            override fun onScroll(f: Float) {
+                Log.d("SECOND_SCROLL", "Scroll: $f")
+                if (f > 0.0){
+                    val animator = ValueAnimator.ofFloat(0f, 1f)
+                    animator.duration = 500
+                    animator.interpolator = AccelerateInterpolator()
 
+                } else {
+
+                }
             }
         })
 

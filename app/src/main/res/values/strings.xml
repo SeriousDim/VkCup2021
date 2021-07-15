@@ -12,4 +12,17 @@
     <string name="hide">Скрыть</string>
     <string name="like">Нравится</string>
 
+    <string name="moreNews">Больше таких записей</string>
+    <string name="lessNews">Меньше таких записей</string>
+    <string name="title_activity_first">Map</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="fromGo">Откуда едем?</string>
+    <string name="whereGo">Куда поедем?</string>
+
+    <string name="ready">Готово</string>
+    <string name="buy_for">Заказать за </string>
+    <string name="ruble"> ₽</string>
+
 </resources>
