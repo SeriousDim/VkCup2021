@@ -1,4 +1,4 @@
-package com.example.vk_cup_2021.retrofit.api
+package com.example.vk_cup_2021.retrofit.second_task.api
 
 import com.example.example.Recommendation
 import okhttp3.ResponseBody

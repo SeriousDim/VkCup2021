@@ -13,4 +13,6 @@
     <color name="vk_transparent">#343F8AE0</color>
     <color name="vk_red">#ffFF3347 </color>
     <color name="vk_red_transparent">#34FF3347</color>
+
+    <color name="vk_purple">#FF725BE3</color>
 </resources>

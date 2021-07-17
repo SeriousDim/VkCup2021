@@ -11,7 +11,7 @@ import com.example.vk_cup_2021.R
 import com.example.vk_cup_2021.modules.FontWorker
 import com.example.vk_cup_2021.modules.second_task.NewsWizard
 import com.example.vk_cup_2021.modules.Notifier
-import com.example.vk_cup_2021.retrofit.api.ApiWorker
+import com.example.vk_cup_2021.retrofit.second_task.api.RecommendApiWorker
 import com.lorentzos.flingswipe.SwipeFlingAdapterView
 import com.lorentzos.flingswipe.SwipeFlingAdapterView.onFlingListener
 import kotlinx.android.synthetic.main.activity_second.*
@@ -30,7 +30,7 @@ class SecondActivity : AppCompatActivity() {
         var news: ArrayList<Map<String, Any?>>? = null
         var simpleAdapter: SimpleAdapter? = null
 
-        var worker = ApiWorker(this)
+        var worker = RecommendApiWorker(this)
         worker.getRecommend() {
             news = wizard.buildData(worker.recommendation?.response!!)
             simpleAdapter = wizard.getSimpleAdapter(this, news!!)

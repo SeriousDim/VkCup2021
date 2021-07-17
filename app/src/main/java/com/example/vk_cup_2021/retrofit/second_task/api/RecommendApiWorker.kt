@@ -1,4 +1,4 @@
-package com.example.vk_cup_2021.retrofit.api
+package com.example.vk_cup_2021.retrofit.second_task.api
 
 import android.content.Context
 import com.example.example.Recommendation
@@ -9,7 +9,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ApiWorker{
+class RecommendApiWorker{
 
     private val TOKEN = "f3a52e73940553ef67d31a4274d475e0d192e65cf48be9e7f0493bae5fcdf3871a75c1fa8fd85ede6cadf"
 
