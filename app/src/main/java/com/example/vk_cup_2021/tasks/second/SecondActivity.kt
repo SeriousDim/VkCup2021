@@ -64,7 +64,7 @@ class SecondActivity : AppCompatActivity() {
 
             override fun onAdapterAboutToEmpty(itemsInAdapter: Int) {
                 if (itemsInAdapter == 0){
-                    Notifier.showToast(this@SecondActivity, "Liked: ${liked.size}\nDisliked: ${disliked.size}")
+                    Notifier.showToast(this@SecondActivity, "Понравилось: ${liked.size}\nНе понравилось: ${disliked.size}")
                 }
             }
 

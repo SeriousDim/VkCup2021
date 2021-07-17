@@ -8,7 +8,7 @@ class Notifier{
     companion object{
 
         fun showToast(c: Context, s: String){
-            Toast.makeText(c, s, Toast.LENGTH_SHORT).show()
+            Toast.makeText(c, s, Toast.LENGTH_LONG).show()
         }
 
     }

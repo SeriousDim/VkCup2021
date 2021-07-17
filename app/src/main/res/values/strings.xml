@@ -18,13 +18,20 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="fromGo">Откуда едем?</string>
+    <string name="fromGo">Мое местоположение</string>
     <string name="whereGo">Куда поедем?</string>
 
     <string name="ready">Готово</string>
-    <string name="buy_for">Заказать за </string>
-    <string name="ruble"> ₽</string>
+    <string name="buy_for">Заказать за %1$d ₽</string>
+    <string name="ruble">%1$d ₽</string>
 
     <string name="google_api">AIzaSyACfwXTc5LgtyBb4_wULCPGNx412tGYNbc</string>
+
+    <string name="taxi1">Проехать быстро</string>
+    <string name="taxi2">Увидеть красоты города</string>
+    <string name="taxi3">На беспилотнике</string>
+
+    <string name="timeInWay">%1$s в пути</string>
+    <string name="timeAwait">%1$s ожидание</string>
 
 </resources>

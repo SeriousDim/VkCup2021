@@ -33,7 +33,7 @@ class RecommendApiWorker{
         var call = api.getRecommendations("5.52", TOKEN, 20)
         call.enqueue(object: Callback<Recommendation>{
             override fun onFailure(call: Call<Recommendation>, t: Throwable) {
-                Notifier.showToast(context, "Cannot load newsfeed")
+                Notifier.showToast(context, "Невозможно загрузить новости")
             }
 
             override fun onResponse(

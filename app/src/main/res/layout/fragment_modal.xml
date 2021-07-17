@@ -2,10 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame_modal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    app:behavior_peekHeight="210dp"> <!-- 210dp -->
+    app:behavior_peekHeight="210dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"> <!-- 210dp -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -77,11 +78,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
-            <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/taxi1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
+                    android:text="@string/taxi1"
                     android:textColor="#ff000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -136,6 +136,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/taxi2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -168,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
+                    android:text="@string/taxi2"
                     android:textColor="#ff000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -190,6 +191,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/taxi3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -222,7 +224,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="TextView"
+                    android:text="@string/taxi3"
                     android:textColor="#ff000000"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -273,6 +275,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/purple_button"
+                android:onClick="buyTaxi"
                 android:text="@string/buy_for"
                 tools:visibility="gone" />
         </LinearLayout>
