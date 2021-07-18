@@ -1,16 +1,18 @@
 package com.example.vk_cup_2021.tasks.second
 
-import android.animation.ValueAnimator
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.AccelerateInterpolator
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.SimpleAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.ImageViewCompat
 import com.example.vk_cup_2021.R
 import com.example.vk_cup_2021.modules.FontWorker
-import com.example.vk_cup_2021.modules.second_task.NewsWizard
 import com.example.vk_cup_2021.modules.Notifier
+import com.example.vk_cup_2021.modules.second_task.NewsWizard
 import com.example.vk_cup_2021.retrofit.second_task.api.RecommendApiWorker
 import com.lorentzos.flingswipe.SwipeFlingAdapterView
 import com.lorentzos.flingswipe.SwipeFlingAdapterView.onFlingListener
@@ -51,11 +53,23 @@ class SecondActivity : AppCompatActivity() {
         }
 
         flingContainer.setFlingListener(object : onFlingListener {
+            private var lastScroll: Float = 0.0f
+
             override fun removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 // al.removeAt(0)
                 news?.removeAt(0)
                 simpleAdapter?.notifyDataSetChanged()
+
+                var red = resources.getColor(R.color.vk_red)
+                var blue = resources.getColor(R.color.vk)
+                var white = resources.getColor(R.color.white)
+                ImageViewCompat.setImageTintList(dislike, ColorStateList.valueOf(blue))
+                ImageViewCompat.setImageTintList(like, ColorStateList.valueOf(red))
+                dislike.backgroundTintList = ColorStateList.valueOf(white)
+                like.backgroundTintList = ColorStateList.valueOf(white)
+
+                lastScroll = 0.0f
             }
 
             override fun onLeftCardExit(dataObject: Any) {
@@ -75,14 +89,32 @@ class SecondActivity : AppCompatActivity() {
             override fun onScroll(f: Float) {
                 Log.d("SECOND_SCROLL", "Scroll: $f")
                 
+                var red = resources.getColor(R.color.vk_red)
+                var blue = resources.getColor(R.color.vk)
+                var white = resources.getColor(R.color.white)
 
-                if (f > 0.0){
+                ImageViewCompat.setImageTintList(dislike, ColorStateList.valueOf(blue))
+                ImageViewCompat.setImageTintList(like, ColorStateList.valueOf(red))
+                dislike.backgroundTintList = ColorStateList.valueOf(white)
+                like.backgroundTintList = ColorStateList.valueOf(white)
+                if (f > 0.05){
+                    ImageViewCompat.setImageTintList(like, ColorStateList.valueOf(white))
+                    like.backgroundTintList = ColorStateList.valueOf(red)
 
-                } else if (f < 0.0) {
+                    if (lastScroll <= 0.05f){
+                        val animation: Animation = AnimationUtils.loadAnimation(this@SecondActivity, R.anim.scale_anim)
+                        like.startAnimation(animation)
+                    }
+                } else if (f < -0.05) {
+                    ImageViewCompat.setImageTintList(dislike, ColorStateList.valueOf(white))
+                    dislike.backgroundTintList = ColorStateList.valueOf(blue)
 
-                } else {
-
+                    if (lastScroll >= -0.05f){
+                        val animation: Animation = AnimationUtils.loadAnimation(this@SecondActivity, R.anim.scale_anim)
+                        dislike.startAnimation(animation)
+                    }
                 }
+                lastScroll = f
             }
         })
 

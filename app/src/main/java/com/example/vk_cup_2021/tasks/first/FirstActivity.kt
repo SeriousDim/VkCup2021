@@ -3,6 +3,7 @@ package com.example.vk_cup_2021.tasks.first
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -32,17 +33,22 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import kotlin.random.Random
 
 
-class FirstActivity : AppCompatActivity(), OnMapReadyCallback {
+class FirstActivity : AppCompatActivity(), OnMapReadyCallback
+    ,GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener{
 
     private val FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
     private val COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION
 
+    private var origin: String? = null
+    private var destination: MarkerOptions? = null
     private lateinit var mMap: GoogleMap
     private lateinit var retrofit: Retrofit
     private lateinit var api: GoogleMapsAPI
+    private lateinit var geocoder: Geocoder
 
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
     private var mLocationPermissionsGranted: Boolean = false
@@ -78,6 +84,7 @@ class FirstActivity : AppCompatActivity(), OnMapReadyCallback {
         whiteColor = resources.getColor(R.color.white)
         purpleColor = resources.getColor(R.color.vk_purple_trasnparent)
 
+        geocoder = Geocoder(this)
         setListeners()
     }
 
@@ -222,9 +229,9 @@ class FirstActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun processPath(body: GoogleDirections?){
+        mMap.clear()
         if (polyline != null) {
             polyline?.remove()
-            mMap.clear()
         }
 
         val polylineOptions = PolylineOptions()
@@ -241,8 +248,10 @@ class FirstActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val e = legs?.endLocation
         ll = LatLng(e?.lat!!, e.lng)
-        mMap.addMarker(MarkerOptions().position(ll).title(""))
-            .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.pin))
+
+        destination = MarkerOptions().position(ll).title("").draggable(true)
+        mMap.addMarker(destination)
+                .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.pin))
 
         var path = MapWorker.decodePoly(body?.routes?.get(0)?.overviewPolyline.points)
         polylineOptions.addAll(path)
@@ -290,6 +299,7 @@ class FirstActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun sendRequestForPath(origin: String, dest: String, key: String){
+        this@FirstActivity.origin = origin
         var call = api.getDirections(origin, dest, key, "driving", "RU")
         call.enqueue(object: Callback<GoogleDirections>{
             override fun onFailure(call: Call<GoogleDirections>, t: Throwable) {
@@ -336,12 +346,51 @@ class FirstActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.setOnMarkerDragListener(this)
 
         if (mLocationPermissionsGranted){
             getDeviceLocation() {
-                if (it != null)
+                if (it != null) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(it))
+
+                    origin = "${it.latitude},${it.longitude}"
+                    destination = MarkerOptions().position(it).title("").draggable(true)
+                    mMap.addMarker(destination)
+                            .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.pin))
+                }
             }
         }
     }
+
+    override fun onMapLongClick(ll: LatLng?) {
+
+    }
+
+    override fun onMarkerDragEnd(m: Marker?) {
+        try {
+            var ll = m?.position
+            var addresses = geocoder.getFromLocation(ll?.latitude!!, ll?.longitude!!, 1)
+            if (addresses.size > 0){
+                var addr = addresses.get(0)
+                var street = addr.getAddressLine(0)
+                var key = resources.getString(R.string.google_api)
+                to_point.setText(street)
+
+                sendRequestForPath(origin!!, street, key)
+                hideKeyboard()
+                taxi1.performClick()
+            }
+        } catch (e: IOException){
+
+        }
+    }
+
+    override fun onMarkerDragStart(p0: Marker?) {
+
+    }
+
+    override fun onMarkerDrag(p0: Marker?) {
+
+    }
+
 }
