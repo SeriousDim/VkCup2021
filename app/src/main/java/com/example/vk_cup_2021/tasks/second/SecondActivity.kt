@@ -18,17 +18,21 @@ import kotlinx.android.synthetic.main.activity_second.*
 
 
 class SecondActivity : AppCompatActivity() {
+    private lateinit var flingContainer: SwipeFlingAdapterView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
         FontWorker.setDemiBoldVKFont(toolbar_title, assets)
-        val flingContainer =
+        flingContainer =
             findViewById<View>(R.id.fling) as SwipeFlingAdapterView
 
         val wizard = NewsWizard()
         var news: ArrayList<Map<String, Any?>>? = null
         var simpleAdapter: SimpleAdapter? = null
+
+
 
         var worker = RecommendApiWorker(this)
         worker.getRecommend() {
@@ -70,10 +74,11 @@ class SecondActivity : AppCompatActivity() {
 
             override fun onScroll(f: Float) {
                 Log.d("SECOND_SCROLL", "Scroll: $f")
+                
+
                 if (f > 0.0){
-                    val animator = ValueAnimator.ofFloat(0f, 1f)
-                    animator.duration = 500
-                    animator.interpolator = AccelerateInterpolator()
+
+                } else if (f < 0.0) {
 
                 } else {
 
@@ -84,6 +89,14 @@ class SecondActivity : AppCompatActivity() {
         /*flingContainer.setOnItemClickListener { itemPosition, dataObject ->
             Toast.makeText(this@SecondActivity, "Clicked!", Toast.LENGTH_SHORT).show()
         }*/
+    }
+
+    fun dislike(v: View){
+        flingContainer.getTopCardListener().selectLeft();
+    }
+
+    fun like(v: View){
+        flingContainer.getTopCardListener().selectRight();
     }
 
 }
